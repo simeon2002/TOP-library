@@ -169,7 +169,7 @@ ion-icon {
   transition: all 0.3s;
 }
 
-/* book form modal window */
+/* book form modal window note: NO BEM arch used here.*/
 :modal {
   padding: var(--space-600);
 }
