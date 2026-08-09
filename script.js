@@ -20,10 +20,11 @@ const Book = function (title, author, pages, readStatus) {
   console.log();
 
   if (!(typeof title === "string") || !(typeof author === "string") || !Number.isFinite(pages)) {
-    console.log("Input is not valid");
+    console.error("Input is not valid");
     return;
   }
 
+  this.bookId = crypto.randomUUID();
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -38,7 +39,11 @@ const App = function () {
   this._displayBooks();
 };
 
-App.prototype._displayBooks = function () {};
+App.prototype._displayBooks = function () {
+  const html = this.library.map(this._getBookHtml);
+  const formBody = document.querySelector(".table tbody");
+  formBody.insertAdjacentHTML("afterbegin", html.join(""));
+};
 
 App.prototype.addNewBook = function (book) {
   if (book instanceof Book) this.library.push(book);
@@ -48,16 +53,29 @@ App.prototype.addNewBook = function (book) {
 App.prototype._getBookHtml = function (book) {
   console.log(book instanceof Book);
   return `
-
+    <tr class="book" data-book-id="${book.bookId}">
+      <td class="book__title">${book.title}</td>
+      <td class="book__author">${book.author}</td>
+      <td class="book__pages">${book.pages}</td>
+      <td class="book__read-status">
+        <input class="checkbox" type="checkbox" ${book.readStatus ? "checked" : ""} />
+      </td>
+      <td class="book__remove">
+        <button class="btn--remove">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </td>
+    </tr>
   `;
 };
 
 // MAIN CODE
-const app = new App();
-
 // DUMMY DATA
 const book1 = new Book("The Lost Ocean", "Jane Doe", 245, false);
 const book2 = new Book("Time and Space", "John Smith", 312, true);
-const book3 = new Book("Shadows in the Dark", 180, false);
+const book3 = new Book("Shadows in the Dark", "Emily White", 180, false);
 const book4 = new Book("The Last Recipe", "Alan Cook", 410, false);
+
+const app = new App();
 app.addNewBook(book1).addNewBook(book2).addNewBook(book3).addNewBook(book4);
+app._displayBooks();
