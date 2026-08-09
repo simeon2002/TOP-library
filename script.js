@@ -35,6 +35,10 @@ const Book = function (title, author, pages, readStatus) {
   this.readStatus = readStatus;
 };
 
+Book.prototype.toggleReadStatus = function () {
+  this.readStatus = !this.readStatus;
+};
+
 // APP CLASS
 const App = function () {
   this.library = [
@@ -55,6 +59,9 @@ const App = function () {
 
   // Remove book event listener
   tableBody.addEventListener("click", this._removeBook.bind(this));
+
+  // Toggle read status
+  tableBody.addEventListener("click", this._toggleReadStatus.bind(this));
 };
 
 App.prototype._isLibEmpty = function (library) {
@@ -132,17 +139,34 @@ App.prototype._removeBook = function (e) {
   if (!btnRemove) return;
 
   // get book id
-  const bookId = btnRemove.closest(".book").dataset.bookId;
+  const bookId = this._parseBookIdFromParentBook(btnRemove);
   console.log(bookId);
 
   // remove book from lib
-  const bookIdx = this.library.find(book => book.bookId === bookId);
+  const bookIdx = this._findBookIdxById(bookId);
   this.library.splice(bookIdx, 1);
 
   // Display book again
   this._displayBooks();
 
   return this;
+};
+
+App.prototype._toggleReadStatus = function (e) {
+  const readStatusEl = e.target.closest(".checkbox");
+  if (!readStatusEl) return;
+
+  // Book status
+  const bookId = this._parseBookIdFromParentBook(readStatusEl);
+  this._findBookIdxById(bookId).toggleReadStatus();
+};
+
+App.prototype._parseBookIdFromParentBook = function (el) {
+  return el.closest(".book").dataset.bookId;
+};
+
+App.prototype._findBookIdxById = function (id) {
+  return this.library.find(book => book.bookId === id);
 };
 
 // MAIN CODE
