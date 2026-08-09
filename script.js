@@ -1,9 +1,11 @@
 "use strict";
 
 const btnAddNewBook = document.querySelector(".btn--add");
-const bookModal = document.querySelector("dialog");
 const btnSubmitModal = document.querySelector(".btn--modal");
+
+const bookModal = document.querySelector("dialog");
 const bookForm = document.querySelector("form");
+const tableBody = document.querySelector(".table tbody");
 
 // BOOK CLASS
 const Book = function (title, author, pages, readStatus) {
@@ -75,6 +77,22 @@ const App = function () {
       alert("Please provide valid information in the input fields!");
     }
   });
+
+  // Remove book event listener
+  tableBody.addEventListener("click", e => {
+    const btnRemove = e.target.closest(".btn--remove");
+    if (!btnRemove) return;
+
+    // get book id
+    const bookId = btnRemove.closest(".book").dataset.bookId;
+    console.log(bookId);
+
+    // remove book
+    this._removeBook(bookId);
+
+    // re-display again
+    this._displayBooks();
+  });
 };
 
 App.prototype._isLibEmpty = function (library) {
@@ -83,13 +101,12 @@ App.prototype._isLibEmpty = function (library) {
 
 App.prototype._displayBooks = function () {
   let html;
-  const formBody = document.querySelector(".table tbody");
 
   if (this._isLibEmpty() === false) html = this.library.map(this._getBookHtml).join("");
   else html = "No books found yet. Add Some!";
 
-  formBody.innerHTML = "";
-  formBody.insertAdjacentHTML("afterbegin", html);
+  tableBody.innerHTML = "";
+  tableBody.insertAdjacentHTML("afterbegin", html);
 };
 
 App.prototype.addNewBook = function (book) {
@@ -98,7 +115,6 @@ App.prototype.addNewBook = function (book) {
 };
 
 App.prototype._getBookHtml = function (book) {
-  console.log(book instanceof Book);
   return `
     <tr class="book" data-book-id="${book.bookId}">
       <td class="book__title">${book.title}</td>
@@ -121,6 +137,12 @@ App.prototype._displayForm = function () {
   console.log(this);
 
   bookModal.showModal();
+};
+
+App.prototype._removeBook = function (bookId) {
+  const bookIdx = this.library.find(book => book.bookId === bookId);
+  this.library.splice(bookIdx, 1);
+  return this;
 };
 
 // MAIN CODE
