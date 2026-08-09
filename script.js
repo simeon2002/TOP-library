@@ -104,6 +104,9 @@ App.prototype._addNewBook = function (e) {
 
     // close book modal form
     bookModal.close();
+
+    // store to local storage
+    this._storeToLocalStorage("library", this.library);
   } else {
     alert("Please provide valid information in the input fields!");
   }
@@ -167,6 +170,10 @@ App.prototype._parseBookIdFromParentBook = function (el) {
 
 App.prototype._findBookIdxById = function (id) {
   return this.library.find(book => book.bookId === id);
+};
+
+App.prototype._storeToLocalStorage = function (key, item) {
+  localStorage.setItem(key, JSON.stringify(item));
 };
 
 // MAIN CODE
