@@ -8,7 +8,7 @@ const bookForm = document.querySelector("form");
 const tableBody = document.querySelector(".table tbody");
 
 // BOOK CLASS
-const Book = function (title, author, pages, readStatus) {
+const Book = function (title, author, pages, readStatus, bookId) {
   if (!new.target) {
     console.error("Use the new keyword when calling this function!");
   }
@@ -28,7 +28,7 @@ const Book = function (title, author, pages, readStatus) {
     return;
   }
 
-  this.bookId = crypto.randomUUID();
+  this.bookId = bookId ?? crypto.randomUUID();
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -41,12 +41,17 @@ Book.prototype.toggleReadStatus = function () {
 
 // APP CLASS
 const App = function () {
-  this.library = [
-    new Book("The Lost Ocean", "Jane Doe", 245, false),
-    new Book("Time and Space", "John Smith", 312, true),
-    new Book("Shadows in the Dark", "Emily White", 180, false),
-    new Book("The Last Recipe", "Alan Cook", 410, false),
-  ];
+  // this.library = [
+  //   new Book("The Lost Ocean", "Jane Doe", 245, false),
+  //   new Book("Time and Space", "John Smith", 312, true),
+  //   new Book("Shadows in the Dark", "Emily White", 180, false),
+  //   new Book("The Last Recipe", "Alan Cook", 410, false),
+  // ];
+
+  this.library =
+    this._fetchFromLocalStorage("library")?.map(book => new Book(book.title, book.author, book.pages, book.readStatus, book.bookId)) ?? [];
+
+  console.log(this.library);
 
   // Display books on page load
   this._displayBooks();
@@ -142,7 +147,7 @@ App.prototype._removeBook = function (e) {
   if (!btnRemove) return;
 
   // get book id
-  const bookId = this._parseBookIdFromParentBook(btnRemove);
+  const bookId = this._parseBookIdFromBookEl(btnRemove);
   console.log(bookId);
 
   // remove book from lib
@@ -152,6 +157,9 @@ App.prototype._removeBook = function (e) {
   // Display book again
   this._displayBooks();
 
+  // update local storage
+  this._storeToLocalStorage("library", this.library);
+
   return this;
 };
 
@@ -159,12 +167,15 @@ App.prototype._toggleReadStatus = function (e) {
   const readStatusEl = e.target.closest(".checkbox");
   if (!readStatusEl) return;
 
-  // Book status
-  const bookId = this._parseBookIdFromParentBook(readStatusEl);
+  const bookId = this._parseBookIdFromBookEl(readStatusEl);
   this._findBookIdxById(bookId).toggleReadStatus();
+  console.log(this._findBookIdxById(bookId));
+
+  // update local storage
+  this._storeToLocalStorage("library", this.library);
 };
 
-App.prototype._parseBookIdFromParentBook = function (el) {
+App.prototype._parseBookIdFromBookEl = function (el) {
   return el.closest(".book").dataset.bookId;
 };
 
@@ -174,6 +185,11 @@ App.prototype._findBookIdxById = function (id) {
 
 App.prototype._storeToLocalStorage = function (key, item) {
   localStorage.setItem(key, JSON.stringify(item));
+};
+
+App.prototype._fetchFromLocalStorage = function (key) {
+  const item = localStorage.getItem(key);
+  return JSON.parse(item);
 };
 
 // MAIN CODE
