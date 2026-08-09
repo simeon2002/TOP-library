@@ -10,7 +10,7 @@
   /*****  COLORS (primary, secondary, accents and greys) *****/
   --clr-white: #fff;
   --clr-black: hsl(0, 0%, 0%);
-  --clr-grey: rgb(117, 117, 117);
+  --clr-grey: rgba(117, 117, 117, 0.158);
   --clr-green: green;
   --clr-green-light: rgba(0, 128, 0, 0.772);
 
@@ -89,14 +89,15 @@ body {
 }
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: var(--space-600);
 }
 
 .list-container {
-  max-width: 100rem;
+  width: 60%;
   display: flex;
   flex-direction: column;
 }
@@ -108,19 +109,22 @@ body {
 }
 
 /* TABLE DISPLAY */
-
-.display {
-  margin-bottom: var(--space-200);
+.table-container {
+  display: none;
 }
 
-.display--table {
+.display--table .table-container {
+  display: initial;
+  align-self: center;
   box-shadow: 0 0.1rem 1rem 0 hsl(0, 0, 0, 9%);
   border-radius: 12px;
 }
 
 table {
+  width: 100%;
   border-collapse: collapse;
   text-align: left;
+  margin-bottom: var(--space-200);
 }
 
 thead tr:first-child {
@@ -145,7 +149,7 @@ tbody tr:not(:last-child) td {
 }
 
 .btn-add-container {
-  align-self: end;
+  text-align: right;
 }
 
 .btn--remove {
@@ -237,6 +241,73 @@ input:is([type="text"], [type="tel"]) {
   background-color: var(--clr-green);
 }
 
+.display {
+  width: 100%;
+}
+
+/* CARD DISPLAY */
+.cards-container {
+  display: none;
+}
+
+.display--cards .cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+  grid-template-rows: auto 1fr;
+  gap: var(--space-400);
+}
+
+.card {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+  gap: var(--space-200);
+  border: 2px solid hsl(0, 0%, 94%);
+  border-radius: 12px;
+  box-shadow: 0rem 0.3rem 1rem hsla(0, 0%, 0%, 0.059);
+  padding: var(--space-300);
+}
+
+.card__list {
+  list-style: none;
+  /* width: 80%; */
+}
+
+.card__list-item:not(:last-child) {
+  margin-bottom: var(--space-100);
+}
+
+.card__list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-600);
+}
+
+/* styling the label */
+.card__list :is(span:first-child, label) {
+  font-weight: var(--fw-medium);
+  text-transform: capitalize;
+  flex-basis: 42%;
+}
+
+.card--add-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-weight: var(--fw-medium);
+  color: rgb(76, 76, 76);
+}
+
+.card--add-new:hover {
+  background-color: var(--clr-grey);
+}
+
+.card--add-new span {
+  grid-row: 1 / -1;
+}
+
 /********************************************/
 /* REUSABLE COMPONENTS */
 /********************************************/
@@ -288,7 +359,7 @@ input:is([type="text"], [type="tel"]) {
   appearance: none;
   width: 2rem;
   height: 2rem;
-  border: 1px solid var(--clr-grey);
+  border: 1px solid rgba(0, 0, 0, 0.507);
   border-radius: 50%;
   color: var(--clr-white); /* color set here so that's it is overridable by microsoft high-contrast mode */
   transition: all 0.5s;
@@ -326,3 +397,6 @@ input:is([type="text"], [type="tel"]) {
 /********************************************/
 /* UTILITY / HELPER CLASSES */
 /********************************************/
+.hidden {
+  display: none;
+}

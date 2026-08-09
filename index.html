@@ -13,30 +13,31 @@
   <body>
     <main class="container">
       <div class="list-container">
-        <h1 class="app-name">BOOKS LIBRARY</h1>
-        <div class="display-options">
-          <button class="btn-outline btn--table btn--active">Table</button>
-          <button class="btn-outline btn--card">Card</button>
-        </div>
-        <div class="display display--table">
-          <table class="table">
-            <colgroup>
-              <col span="1" />
-              <col span="1" />
-              <col span="1" />
-              <col span="1" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Pages</th>
-                <th scope="col">Read status</th>
-                <th scope="col">Remove?</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- <tr class="book" data-book-id="x">
+        <div class="display display--cards">
+          <h1 class="app-name">BOOKS LIBRARY</h1>
+          <div class="display-options">
+            <button class="btn-outline btn--table">Table</button>
+            <button class="btn-outline btn--card btn--active">Card</button>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <colgroup>
+                <col span="1" />
+                <col span="1" />
+                <col span="1" />
+                <col span="1" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Pages</th>
+                  <th scope="col">Read status</th>
+                  <th scope="col">Remove?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr class="book" data-book-id="x">
                 <td class="book__title">The Lost Ocean</td>
                 <td class="book__author">Jane Doe</td>
                 <td class="book__pages">245</td>
@@ -88,10 +89,87 @@
                   </button>
                 </td>
               </tr> -->
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+            <div class="btn-add-container"><button class="btn btn--add">Add new</button></div>
+          </div>
+          <div class="cards-container">
+            <article class="card">
+              <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
+              <h2 class="card__book-title">The Last Recipe</h2>
+              <ul class="card__list card__book-details">
+                <li class="card__list-item card__author"><span>Author</span> <span Cook>Alan Cook</span></li>
+                <li class="card__list-item card__pages"><span>Pages</span><span>410</span></li>
+                <li class="card__list-item card__read-status">
+                  <label for="read-status">Read Status</label>
+                  <input class="checkbox" type="checkbox" id="read-status" />
+                </li>
+              </ul>
+            </article>
+            <article class="card">
+              <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
+              <h2 class="card__book-title">The Last Recipe</h2>
+              <ul class="card__list card__book-details">
+                <li class="card__list-item card__author"><span>Author</span> <span Cook>Alan Cook</span></li>
+                <li class="card__list-item card__pages"><span>Pages</span><span>410</span></li>
+                <li class="card__list-item card__read-status">
+                  <label for="read-status">Read status</label>
+                  <input class="checkbox" type="checkbox" id="read-status" />
+                </li>
+              </ul>
+            </article>
+            <article class="card">
+              <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
+              <h2 class="card__book-title">The Last Recipe</h2>
+              <ul class="card__list card__book-details">
+                <li class="card__list-item card__author"><span>Author</span> <span Cook>Alan Cook</span></li>
+                <li class="card__list-item card__pages"><span>Pages</span><span>410</span></li>
+                <li class="card__list-item card__read-status">
+                  <label for="read-status">Read status</label>
+                  <input class="checkbox" type="checkbox" id="read-status" />
+                </li>
+              </ul>
+            </article>
+            <article class="card">
+              <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
+              <h2 class="card__book-title">The Last Recipe</h2>
+              <ul class="card__list card__book-details">
+                <li class="card__list-item card__author"><span>Author</span> <span Cook>Alan Cook</span></li>
+                <li class="card__list-item card__pages"><span>Pages</span><span>410</span></li>
+                <li class="card__list-item card__read-status">
+                  <label for="read-status">Read status</label>
+                  <input class="checkbox" type="checkbox" id="read-status" />
+                </li>
+              </ul>
+            </article>
+            <article class="card">
+              <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
+              <h2 class="card__book-title">The Last Recipe</h2>
+              <ul class="card__list card__book-details">
+                <li class="card__list-item card__author"><span>Author</span> <span Cook>Alan Cook</span></li>
+                <li class="card__list-item card__pages"><span>Pages</span><span>410</span></li>
+                <li class="card__list-item card__read-status">
+                  <label for="read-status">Read status</label>
+                  <input class="checkbox" type="checkbox" id="read-status" />
+                </li>
+              </ul>
+            </article>
+            <button class="card card--add-new"><span>Add new books</span></button>
+            <!--       <tr class="book" data-book-id="x">
+                <td class="book__title">The Last Recipe</td>
+                <td class="book__author">Alan Cook</td>
+                <td class="book__pages">410</td>
+                <td class="book__read-status">
+                  <input class="checkbox" type="checkbox" />
+                </td>
+                <td class="book__remove">
+                  <button class="btn--remove">
+                    <ion-icon name="close-outline"></ion-icon>
+                  </button>
+                </td>
+              </tr> -->
+          </div>
         </div>
-        <div class="btn-add-container"><button class="btn btn--add">Add new</button></div>
       </div>
     </main>
     <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
