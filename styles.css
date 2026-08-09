@@ -1,0 +1,312 @@
+@import "node_modules/modern-normalize/modern-normalize.css";
+@import "reset.css";
+
+/********************************************/
+/* DESIGN SYSTEM */
+/********************************************/
+:root {
+  font-size: 62.5%; /* Start with 10px as default relative font size assuming default browser font size of 16px*/
+
+  /*****  COLORS (primary, secondary, accents and greys) *****/
+  --clr-white: #fff;
+  --clr-black: hsl(0, 0%, 0%);
+  --clr-grey: rgb(117, 117, 117);
+  --clr-green: green;
+  --clr-green-light: rgba(0, 128, 0, 0.772);
+
+  /***** TYPOGRAPHY *****/
+  /* font weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* - Font sizes (px) */
+  --fs-100: 1rem; /* 10px */
+  --fs-200: 1.2rem; /* 12px */
+  --fs-300: 1.4rem; /* 14px */
+  --fs-400: 1.6rem; /* 16px */
+  --fs-500: 1.8rem; /* 18px */
+  --fs-600: 2rem; /* 20px */
+  --fs-700: 2.4rem; /* 24px */
+  --fs-800: 3rem; /* 30px */
+  --fs-900: 3.6rem; /* 36px */
+  --fs-1000: 4.4rem; /* 44px */
+  --fs-1100: 5.2rem; /* 52px */
+  --fs-1200: 6.2rem; /* 62px */
+  --fs-1300: 7.4rem; /* 74px */
+  --fs-1400: 8.6rem; /* 86px */
+  --fs-1500: 9.8rem; /* 98px */
+
+  /* letter spacing */
+  /* line heights */
+
+  /***** WHITESPACE *****/
+  /* spacing system */
+  --space-20: 0.2rem;
+  --space-50: 0.4rem;
+  --space-100: 0.8rem;
+  --space-200: 1.6rem;
+  --space-300: 2.4rem;
+  --space-400: 3.2rem;
+  --space-600: 4.8rem;
+  --space-800: 6.4rem;
+  --space-1000: 8rem;
+  --space-1200: 9.6rem;
+  --space-1600: 12.8rem;
+
+  /***** SHADOWS *****/
+
+  /***** BORDER RADIUS *****/
+}
+
+/********************************************/
+/* SPECIFIC STYLES */
+/********************************************/
+.app-name {
+  font-size: var(--fs-700);
+  letter-spacing: -0.4px;
+  line-height: 1.15;
+  margin-bottom: var(--space-300);
+}
+
+body {
+  font-family:
+    "Roboto",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  font-size: var(--fs-400);
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-container {
+  max-width: 100rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* DISPLAY OPTIONS */
+
+.display-options {
+  margin-bottom: var(--space-200);
+}
+
+/* TABLE DISPLAY */
+
+.display {
+  margin-bottom: var(--space-200);
+}
+
+.display--table {
+  box-shadow: 0 0.1rem 1rem 0 hsl(0, 0, 0, 9%);
+  border-radius: 12px;
+  padding: var(--space-400);
+}
+
+table {
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead tr:first-child {
+  border-bottom: 2px solid black;
+}
+
+thead th {
+  padding: var(--space-200) var(--space-200) var(--space-100);
+}
+
+tbody td {
+  padding: var(--space-200) var(--space-200) 0;
+}
+
+tbody tr:not(:last-child) td {
+  /* border-bottom: 1px solid var(--clr-green-light); */
+}
+
+.book__read-status,
+.book__remove {
+  text-align: center;
+}
+
+.btn-add-container {
+  align-self: end;
+}
+
+.btn--remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn--remove:hover ion-icon {
+  color: red;
+  transform: scale(1.2);
+}
+
+ion-icon {
+  /* display: inline-block; */
+  width: 2.4rem;
+  height: 2.4rem;
+  color: hsla(0, 100%, 50%, 0.527);
+  /* transform: scale(1); */
+  transition: all 0.3s;
+}
+
+/* book form modal window */
+:modal {
+  padding: var(--space-600);
+}
+
+:modal h1 {
+  font-size: var(--fs-800);
+  margin-bottom: var(--space-300);
+}
+
+form[method="dialog"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+form[method="dialog"] p {
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-50);
+}
+
+input:is([type="text"], [type="tel"]) {
+  appearance: none;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: var(--space-50) var(--space-50);
+}
+
+.status-checkbox {
+  position: relative;
+  appearance: none;
+  width: 20%;
+  height: 2rem;
+  border-radius: 100px;
+  border: 2px solid rgba(0, 0, 0, 0.588);
+  display: flex;
+  align-items: center;
+}
+
+.status-checkbox::before {
+  position: absolute;
+  left: 0.1rem;
+  content: "";
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: green;
+}
+
+/********************************************/
+/* REUSABLE COMPONENTS */
+/********************************************/
+.btn,
+.btn-outline {
+  background: none;
+  border: none;
+
+  font-weight: var(--fw-bold);
+  text-transform: capitalize;
+  border-radius: 8px;
+  padding: var(--space-50) var(--space-200);
+  transition: all 0.3s ease-out;
+}
+
+.btn {
+  color: var(--clr-white);
+  background-color: var(--clr-green);
+}
+
+.btn:hover {
+  background-color: var(--clr-green-light);
+}
+
+.btn--table {
+  margin-right: var(--space-100);
+}
+
+.btn--active {
+  background-color: var(--clr-green-light) !important;
+  color: var(--clr-white) !important;
+  border: 1px solid transparent !important;
+}
+
+.btn-outline {
+  color: var(--clr-green);
+  background-color: var(--clr-white);
+  border: 1px solid var(--clr-green);
+}
+
+.btn-outline:hover {
+  background-color: var(--clr-green);
+  color: var(--clr-white);
+}
+
+/* Creating custom checkbox (have to account for disabled, and checked state as well as adding a checkmark */
+.checkbox {
+  position: relative;
+  appearance: none;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--clr-grey);
+  border-radius: 50%;
+  color: var(--clr-white); /* color set here so that's it is overridable by microsoft high-contrast mode */
+  transition: all 0.5s;
+}
+
+.checkbox:checked:hover {
+  background-color: var(--clr-green-light);
+}
+
+.checkbox:checked {
+  background-color: var(--clr-green);
+}
+
+.checkbox::before {
+  position: absolute;
+  top: -0.35rem;
+  left: 0.3rem;
+  content: "\2713";
+  opacity: 0;
+  transform: scale(0);
+  visibility: hidden; /* will not cause a re-render unlike display: none! */
+  transition: all 0.5s;
+}
+
+.checkbox:checked::before {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+
+.checkbox:disabled {
+  background-color: var(--clr-grey);
+}
+
+/********************************************/
+/* UTILITY / HELPER CLASSES */
+/********************************************/

@@ -7,9 +7,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel build index.html",
-    "dev": "parcel serve index.html"
+    "start": "parcel serve index.html"
   },
   "devDependencies": {
     "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "modern-normalize": "^3.0.1"
   }
 }
