@@ -14,8 +14,6 @@ const Book = function (title, author, pages, readStatus) {
   }
 
   // TODO: add error handle for pages
-  console.log();
-
   if (
     !(typeof title === "string") ||
     title.length === 0 ||
@@ -39,7 +37,12 @@ const Book = function (title, author, pages, readStatus) {
 
 // APP CLASS
 const App = function () {
-  this.library = [];
+  this.library = [
+    new Book("The Lost Ocean", "Jane Doe", 245, false),
+    new Book("Time and Space", "John Smith", 312, true),
+    new Book("Shadows in the Dark", "Emily White", 180, false),
+    new Book("The Last Recipe", "Alan Cook", 410, false),
+  ];
 
   // Display books on page load
   this._displayBooks();
@@ -48,51 +51,10 @@ const App = function () {
   btnAddNewBook.addEventListener("click", this._displayForm);
 
   // Submission of form
-  bookForm.addEventListener("submit", e => {
-    e.preventDefault();
-
-    // fetch form data
-    let [bookTitle, bookAuthor, bookPages, readStatus] = [...new FormData(bookForm).values()];
-    readStatus = readStatus === "on" ? true : false;
-    bookPages = Number(bookPages);
-    bookPages = Number.isFinite(bookPages) ? bookPages : 0;
-
-    // create book element
-    const book = new Book(bookTitle, bookAuthor, bookPages, readStatus);
-    console.log(book);
-
-    if (Object.keys(book).length !== 0) {
-      // store book
-      this.addNewBook(book);
-
-      // Add book to book list
-      this._displayBooks();
-
-      // reset bookForm
-      bookForm.reset();
-
-      // close book modal form
-      bookModal.close();
-    } else {
-      alert("Please provide valid information in the input fields!");
-    }
-  });
+  bookForm.addEventListener("submit", this._addNewBook.bind(this));
 
   // Remove book event listener
-  tableBody.addEventListener("click", e => {
-    const btnRemove = e.target.closest(".btn--remove");
-    if (!btnRemove) return;
-
-    // get book id
-    const bookId = btnRemove.closest(".book").dataset.bookId;
-    console.log(bookId);
-
-    // remove book
-    this._removeBook(bookId);
-
-    // re-display again
-    this._displayBooks();
-  });
+  tableBody.addEventListener("click", this._removeBook.bind(this));
 };
 
 App.prototype._isLibEmpty = function (library) {
@@ -109,8 +71,35 @@ App.prototype._displayBooks = function () {
   tableBody.insertAdjacentHTML("afterbegin", html);
 };
 
-App.prototype.addNewBook = function (book) {
-  if (book instanceof Book) this.library.push(book);
+App.prototype._addNewBook = function (e) {
+  e.preventDefault();
+
+  // fetch form data
+  let [bookTitle, bookAuthor, bookPages, readStatus] = [...new FormData(bookForm).values()];
+  readStatus = readStatus === "on" ? true : false;
+  bookPages = Number(bookPages);
+  bookPages = Number.isFinite(bookPages) ? bookPages : 0;
+
+  // create book element
+  const book = new Book(bookTitle, bookAuthor, bookPages, readStatus);
+  console.log(book);
+
+  if (Object.keys(book).length !== 0) {
+    // store book
+    if (book instanceof Book) this.library.push(book);
+    else return;
+
+    // Add book to book list
+    this._displayBooks();
+
+    // reset bookForm
+    bookForm.reset();
+
+    // close book modal form
+    bookModal.close();
+  } else {
+    alert("Please provide valid information in the input fields!");
+  }
   return this;
 };
 
@@ -133,15 +122,26 @@ App.prototype._getBookHtml = function (book) {
 };
 
 App.prototype._displayForm = function () {
-  console.log("test");
   console.log(this);
 
   bookModal.showModal();
 };
 
-App.prototype._removeBook = function (bookId) {
+App.prototype._removeBook = function (e) {
+  const btnRemove = e.target.closest(".btn--remove");
+  if (!btnRemove) return;
+
+  // get book id
+  const bookId = btnRemove.closest(".book").dataset.bookId;
+  console.log(bookId);
+
+  // remove book from lib
   const bookIdx = this.library.find(book => book.bookId === bookId);
   this.library.splice(bookIdx, 1);
+
+  // Display book again
+  this._displayBooks();
+
   return this;
 };
 
@@ -154,6 +154,6 @@ const book4 = new Book("The Last Recipe", "Alan Cook", 410, false);
 
 const app = new App();
 // Add books
-app.addNewBook(book1).addNewBook(book2).addNewBook(book3).addNewBook(book4);
+// app._addNewBook(book1)._addNewBook(book2)._addNewBook(book3)._addNewBook(book4);
 // render books (here for now, move to constructor function later when you store them in local storage as well!)
 app._displayBooks();
