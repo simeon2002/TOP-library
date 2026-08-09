@@ -116,7 +116,6 @@ body {
 .display--table {
   box-shadow: 0 0.1rem 1rem 0 hsl(0, 0, 0, 9%);
   border-radius: 12px;
-  padding: var(--space-400);
 }
 
 table {
@@ -179,13 +178,13 @@ ion-icon {
   margin-bottom: var(--space-300);
 }
 
-form[method="dialog"] {
+form {
   display: flex;
   flex-direction: column;
   gap: var(--space-200);
 }
 
-form[method="dialog"] p {
+form p {
   text-transform: capitalize;
   display: flex;
   flex-direction: column;

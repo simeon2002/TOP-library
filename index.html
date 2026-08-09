@@ -97,7 +97,8 @@
     <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
     <dialog class=".book-modal" closedby="any">
-      <form method="dialog">
+      <form>
+        <!-- TODO: add HTML input validation -->
         <h1>Book information</h1>
         <p class="book-title-container">
           <label for="book-title">book title</label>
@@ -109,11 +110,11 @@
         </p>
         <p class="book-pages-container">
           <label for="pages">Page count</label>
-          <input type="tel" id="pages" name="pages" required />
+          <input type="tel" id="pages" name="pages" />
         </p>
         <p class="read-status">
           <label for="read-status">Read status</label>
-          <input class="status-checkbox" type="checkbox" id="read-status" name="read-status" checked />
+          <input class="status-checkbox" type="checkbox" id="read-status" name="read-status" />
         </p>
         <p class="submit-btn-container">
           <button type="submit" class="btn btn--add btn--modal">Add Book</button>
