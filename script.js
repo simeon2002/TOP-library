@@ -86,12 +86,29 @@ const App = function (defaultDisplayMode = "table") {
     this._switchDisplayClasses(this.displayMode);
 
     // re-render UI
-    this._displayBooks(this.displayFormat);
+    this._displayBooks(this.displayMode);
+  });
+
+  // swtich to table display mode
+  btnTableDisplay.addEventListener("click", e => {
+    // change display format
+    this.displayMode = "table";
+
+    // Adjust classes
+    this._switchDisplayClasses(this.displayMode);
+
+    // re-render UI
+    this._displayBooks(this.displayMode);
   });
 };
 
 App.prototype._switchDisplayClasses = function (displayFormat) {
-  if (displayFormat === "table") console.log("test");
+  if (displayFormat === "table") {
+    displayContainer.classList.remove("display--cards");
+    displayContainer.classList.add("display--table");
+    btnCardDisplay.classList.remove("btn--active");
+    btnTableDisplay.classList.add("btn--active");
+  }
 
   if (displayFormat === "card") {
     displayContainer.classList.add("display--cards");
@@ -263,7 +280,7 @@ const book2 = new Book("Time and Space", "John Smith", 312, true);
 const book3 = new Book("Shadows in the Dark", "Emily White", 180, false);
 const book4 = new Book("The Last Recipe", "Alan Cook", 410, false);
 
-const app = new App("card");
+const app = new App();
 // Add books
 // app._addNewBook(book1)._addNewBook(book2)._addNewBook(book3)._addNewBook(book4);
 // render books (here for now, move to constructor function later when you store them in local storage as well!)
