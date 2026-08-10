@@ -48,6 +48,7 @@ Book.prototype.toggleReadStatus = function () {
 
 // APP CLASS
 const App = function (defaultDisplayMode = "table") {
+  // dummy data
   // this.library = [
   //   new Book("The Lost Ocean", "Jane Doe", 245, false),
   //   new Book("Time and Space", "John Smith", 312, true),
@@ -55,18 +56,20 @@ const App = function (defaultDisplayMode = "table") {
   //   new Book("The Last Recipe", "Alan Cook", 410, false),
   // ];
 
-  // set library var
-  this.library =
-    this._fetchFromLocalStorage("library")?.map(book => new Book(book.title, book.author, book.pages, book.readStatus, book.bookId)) ?? [];
-
-  // set initial display mode
-  this.displayMode = defaultDisplayMode;
+  // Load library
+  this.library = this._loadLibrary();
 
   // render books view
   this._renderBookView(this.displayMode);
 
   // bind event listeners
   this._bindEventListeners();
+};
+
+App.prototype._loadLibrary = function () {
+  return (
+    this._fetchFromLocalStorage("library")?.map(book => new Book(book.title, book.author, book.pages, book.readStatus, book.bookId)) ?? []
+  );
 };
 
 App.prototype._bindEventListeners = function () {
@@ -121,10 +124,6 @@ App.prototype._switchDisplayClasses = function (displayFormat) {
   }
 };
 
-App.prototype._isLibEmpty = function (library) {
-  return this.library.length === 0;
-};
-
 App.prototype._displayBooks = function (displayFormat = "table") {
   let html;
   if (displayFormat === "table") {
@@ -142,41 +141,6 @@ App.prototype._displayBooks = function (displayFormat = "table") {
     html = this.library.map(book => this._getBookHtml(book, displayFormat)).join("");
     cardsContainer.insertAdjacentHTML("afterbegin", html);
   }
-};
-
-App.prototype._addNewBook = function (e) {
-  e.preventDefault();
-
-  // fetch form data
-  let [bookTitle, bookAuthor, bookPages, readStatus] = [...new FormData(bookForm).values()];
-  readStatus = readStatus === "on" ? true : false;
-  bookPages = Number(bookPages);
-  bookPages = Number.isFinite(bookPages) ? bookPages : 0;
-
-  // create book element
-  const book = new Book(bookTitle, bookAuthor, bookPages, readStatus);
-  console.log(book);
-
-  if (Object.keys(book).length !== 0) {
-    // store book
-    if (book instanceof Book) this.library.push(book);
-    else return;
-
-    // Add book to book list
-    this._displayBooks(this.displayMode);
-
-    // reset bookForm
-    bookForm.reset();
-
-    // close book modal form
-    bookModal.close();
-
-    // store to local storage
-    this._storeToLocalStorage("library", this.library);
-  } else {
-    alert("Please provide valid information in the input fields!");
-  }
-  return this;
 };
 
 App.prototype._getBookHtml = function (book, displayFormat = "table") {
@@ -221,9 +185,50 @@ App.prototype._getBookHtml = function (book, displayFormat = "table") {
 };
 
 App.prototype._displayForm = function () {
-  console.log(this);
-
   bookModal.showModal();
+};
+
+App.prototype._parseBookIdFromBookEl = function (el) {
+  return el.closest(".book").dataset.bookId;
+};
+
+App.prototype._isLibEmpty = function (library) {
+  return this.library.length === 0;
+};
+
+App.prototype._addNewBook = function (e) {
+  e.preventDefault();
+
+  // fetch form data
+  let [bookTitle, bookAuthor, bookPages, readStatus] = [...new FormData(bookForm).values()];
+  readStatus = readStatus === "on" ? true : false;
+  bookPages = Number(bookPages);
+  bookPages = Number.isFinite(bookPages) ? bookPages : 0;
+
+  // create book element
+  const book = new Book(bookTitle, bookAuthor, bookPages, readStatus);
+  console.log(book);
+
+  if (Object.keys(book).length !== 0) {
+    // store book
+    if (book instanceof Book) this.library.push(book);
+    else return;
+
+    // Add book to book list
+    this._displayBooks(this.displayMode);
+
+    // reset bookForm
+    bookForm.reset();
+
+    // close book modal form
+    bookModal.close();
+
+    // store to local storage
+    this._storeToLocalStorage("library", this.library);
+  } else {
+    alert("Please provide valid information in the input fields!");
+  }
+  return this;
 };
 
 App.prototype._removeBook = function (e) {
@@ -259,10 +264,6 @@ App.prototype._toggleReadStatus = function (e) {
 
   // update local storage
   this._storeToLocalStorage("library", this.library);
-};
-
-App.prototype._parseBookIdFromBookEl = function (el) {
-  return el.closest(".book").dataset.bookId;
 };
 
 App.prototype._findBookIdxById = function (id) {
