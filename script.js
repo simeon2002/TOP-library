@@ -1,7 +1,8 @@
 "use strict";
 
-const btnAddNewBook = document.querySelector(".btn--add");
+const btnsAddNewBook = document.querySelectorAll(".btn--add");
 const btnSubmitModal = document.querySelector(".btn--modal");
+const btnCardDisplay = document.querySelector(".btn--card");
 
 const bookModal = document.querySelector("dialog");
 const bookForm = document.querySelector("form");
@@ -40,7 +41,7 @@ Book.prototype.toggleReadStatus = function () {
 };
 
 // APP CLASS
-const App = function () {
+const App = function (defaultDisplayMode = "table") {
   // this.library = [
   //   new Book("The Lost Ocean", "Jane Doe", 245, false),
   //   new Book("Time and Space", "John Smith", 312, true),
@@ -48,16 +49,18 @@ const App = function () {
   //   new Book("The Last Recipe", "Alan Cook", 410, false),
   // ];
 
+  // set library var
   this.library =
     this._fetchFromLocalStorage("library")?.map(book => new Book(book.title, book.author, book.pages, book.readStatus, book.bookId)) ?? [];
 
-  console.log(this.library);
+  // set initial display mode
+  this.displayMode = defaultDisplayMode;
 
   // Display books on page load
-  this._displayBooks();
+  this._displayBooks(this.displayMode);
 
   // Display form on add new button click
-  btnAddNewBook.addEventListener("click", this._displayForm);
+  btnsAddNewBook.forEach(btnAdd => btnAdd.addEventListener("click", this._displayForm));
 
   // Submission of form
   bookForm.addEventListener("submit", this._addNewBook.bind(this));
@@ -67,16 +70,18 @@ const App = function () {
 
   // Toggle read status
   tableBody.addEventListener("click", this._toggleReadStatus.bind(this));
+
+  // swtich to card display mode
+  btnCardDisplay.addEventListener("click", e => {});
 };
 
 App.prototype._isLibEmpty = function (library) {
   return this.library.length === 0;
 };
 
-App.prototype._displayBooks = function () {
+App.prototype._displayBooks = function (displayFormat = "table") {
   let html;
-
-  if (this._isLibEmpty() === false) html = this.library.map(this._getBookHtml).join("");
+  if (this._isLibEmpty() === false) html = this.library.map(book => this._getBookHtml(book, displayFormat)).join("");
   else html = "No books found yet. Add Some!";
 
   tableBody.innerHTML = "";
@@ -118,8 +123,9 @@ App.prototype._addNewBook = function (e) {
   return this;
 };
 
-App.prototype._getBookHtml = function (book) {
-  return `
+App.prototype._getBookHtml = function (book, displayFormat = "table") {
+  if (displayFormat === "table")
+    return `
     <tr class="book" data-book-id="${book.bookId}">
       <td class="book__title">${book.title}</td>
       <td class="book__author">${book.author}</td>
@@ -134,6 +140,21 @@ App.prototype._getBookHtml = function (book) {
       </td>
     </tr>
   `;
+
+  if (displayFormat === "card")
+    return `
+    <article class="card" data-book-id=${book.bookId}>
+      <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
+      <h2 class="card__book-title">${book.title}</h2>
+      <ul class="card__list card__book-details">
+        <li class="card__list-item card__author"><span>Author</span> <span Cook>${book.author}</span></li>
+        <li class="card__list-item card__pages"><span>Pages</span><span>${book.pages}</span></li>
+        <li class="card__list-item card__read-status">
+          <label for="read-status">Read Status</label>
+          <input class="checkbox" type="checkbox" id="read-status" ${book.readStatus ? "checked" : ""}/>
+        </li>
+      </ul>
+    </article>`;
 };
 
 App.prototype._displayForm = function () {

@@ -13,11 +13,11 @@
   <body>
     <main class="container">
       <div class="list-container">
-        <div class="display display--cards">
+        <div class="display display--table">
           <h1 class="app-name">BOOKS LIBRARY</h1>
           <div class="display-options">
-            <button class="btn-outline btn--table">Table</button>
-            <button class="btn-outline btn--card btn--active">Card</button>
+            <button class="btn-outline btn--table btn--active">Table</button>
+            <button class="btn-outline btn--card">Card</button>
           </div>
           <div class="table-container">
             <table class="table">
@@ -154,7 +154,7 @@
                 </li>
               </ul>
             </article>
-            <button class="card card--add-new"><span>Add new books</span></button>
+            <button class="card card--add-new btn--add"><span>Add new books</span></button>
             <!--       <tr class="book" data-book-id="x">
                 <td class="book__title">The Last Recipe</td>
                 <td class="book__author">Alan Cook</td>
@@ -174,7 +174,7 @@
     </main>
     <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
-    <dialog class=".book-modal" closedby="any">
+    <dialog class="book-modal" closedby="any">
       <form>
         <!-- TODO: add HTML input validation -->
         <h1>Book information</h1>
@@ -195,7 +195,7 @@
           <input class="status-checkbox" type="checkbox" id="read-status" name="read-status" />
         </p>
         <p class="submit-btn-container">
-          <button type="submit" class="btn btn--add btn--modal">Add Book</button>
+          <button type="submit" class="btn btn--modal">Add Book</button>
         </p>
       </form>
     </dialog>
