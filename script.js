@@ -78,7 +78,7 @@ const App = function (defaultDisplayMode = "table") {
   displayContainer.addEventListener("click", this._removeBook.bind(this));
 
   // Toggle read status
-  tableContainer.addEventListener("click", this._toggleReadStatus.bind(this));
+  displayContainer.addEventListener("click", this._toggleReadStatus.bind(this));
 
   // swtich to card display mode
   btnCardDisplay.addEventListener("click", e => {
