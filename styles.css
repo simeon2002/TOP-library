@@ -183,18 +183,26 @@ ion-icon {
 
 /* book form modal window note: NO BEM arch used here.*/
 :modal {
-  padding: var(--space-600);
+  padding: var(--space-800);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 0.2rem 1.5rem hsla(0, 0%, 0%, 0.176);
+  font-weight: var(--fw-medium);
+}
+
+:modal::backdrop {
+  backdrop-filter: blur(2px);
 }
 
 :modal h1 {
   font-size: var(--fs-800);
-  margin-bottom: var(--space-300);
+  margin-bottom: var(--space-100);
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-200);
+  gap: var(--space-300);
 }
 
 form p {
