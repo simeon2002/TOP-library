@@ -72,7 +72,7 @@ const App = function (defaultDisplayMode = "table") {
   bookForm.addEventListener("submit", this._addNewBook.bind(this));
 
   // Remove book event listener
-  tableContainer.addEventListener("click", this._removeBook.bind(this));
+  displayContainer.addEventListener("click", this._removeBook.bind(this));
 
   // Toggle read status
   tableContainer.addEventListener("click", this._toggleReadStatus.bind(this));
@@ -179,7 +179,7 @@ App.prototype._getBookHtml = function (book, displayFormat = "table") {
 
   if (displayFormat === "card")
     return `
-    <article class="card" data-book-id=${book.bookId}>
+    <article class="book card" data-book-id=${book.bookId}>
       <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
       <header class="card__header">
         <h2 class="card__book-title">
@@ -219,7 +219,7 @@ App.prototype._removeBook = function (e) {
   this.library.splice(bookIdx, 1);
 
   // Display book again
-  this._displayBooks();
+  this._displayBooks(this.displayMode);
 
   // update local storage
   this._storeToLocalStorage("library", this.library);
