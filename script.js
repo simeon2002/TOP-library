@@ -3,10 +3,13 @@
 const btnsAddNewBook = document.querySelectorAll(".btn--add");
 const btnSubmitModal = document.querySelector(".btn--modal");
 const btnCardDisplay = document.querySelector(".btn--card");
+const btnTableDisplay = document.querySelector(".btn--table");
 
 const bookModal = document.querySelector("dialog");
 const bookForm = document.querySelector("form");
-const tableBody = document.querySelector(".table tbody");
+const tableContainer = document.querySelector(".table tbody");
+const cardsContainer = document.querySelector(".cards-container");
+const displayContainer = document.querySelector(".display");
 
 // BOOK CLASS
 const Book = function (title, author, pages, readStatus, bookId) {
@@ -56,6 +59,9 @@ const App = function (defaultDisplayMode = "table") {
   // set initial display mode
   this.displayMode = defaultDisplayMode;
 
+  // initialize display class settings
+  this._switchDisplayClasses(this.displayMode);
+
   // Display books on page load
   this._displayBooks(this.displayMode);
 
@@ -66,13 +72,33 @@ const App = function (defaultDisplayMode = "table") {
   bookForm.addEventListener("submit", this._addNewBook.bind(this));
 
   // Remove book event listener
-  tableBody.addEventListener("click", this._removeBook.bind(this));
+  tableContainer.addEventListener("click", this._removeBook.bind(this));
 
   // Toggle read status
-  tableBody.addEventListener("click", this._toggleReadStatus.bind(this));
+  tableContainer.addEventListener("click", this._toggleReadStatus.bind(this));
 
   // swtich to card display mode
-  btnCardDisplay.addEventListener("click", e => {});
+  btnCardDisplay.addEventListener("click", e => {
+    // change display format
+    this.displayMode = "card";
+
+    // Adjust classes
+    this._switchDisplayClasses(this.displayMode);
+
+    // re-render UI
+    this._displayBooks(this.displayFormat);
+  });
+};
+
+App.prototype._switchDisplayClasses = function (displayFormat) {
+  if (displayFormat === "table") console.log("test");
+
+  if (displayFormat === "card") {
+    displayContainer.classList.add("display--cards");
+    displayContainer.classList.remove("display--table");
+    btnCardDisplay.classList.add("btn--active");
+    btnTableDisplay.classList.remove("btn--active");
+  }
 };
 
 App.prototype._isLibEmpty = function (library) {
@@ -84,8 +110,9 @@ App.prototype._displayBooks = function (displayFormat = "table") {
   if (this._isLibEmpty() === false) html = this.library.map(book => this._getBookHtml(book, displayFormat)).join("");
   else html = "No books found yet. Add Some!";
 
-  tableBody.innerHTML = "";
-  tableBody.insertAdjacentHTML("afterbegin", html);
+  tableContainer.innerHTML = "";
+  if (displayFormat === "table") tableContainer.insertAdjacentHTML("afterbegin", html);
+  if (displayFormat === "card") cardsContainer.insertAdjacentHTML("afterbegin", html);
 };
 
 App.prototype._addNewBook = function (e) {
@@ -107,7 +134,7 @@ App.prototype._addNewBook = function (e) {
     else return;
 
     // Add book to book list
-    this._displayBooks();
+    this._displayBooks(this.displayMode);
 
     // reset bookForm
     bookForm.reset();
@@ -220,7 +247,7 @@ const book2 = new Book("Time and Space", "John Smith", 312, true);
 const book3 = new Book("Shadows in the Dark", "Emily White", 180, false);
 const book4 = new Book("The Last Recipe", "Alan Cook", 410, false);
 
-const app = new App();
+const app = new App("card");
 // Add books
 // app._addNewBook(book1)._addNewBook(book2)._addNewBook(book3)._addNewBook(book4);
 // render books (here for now, move to constructor function later when you store them in local storage as well!)
