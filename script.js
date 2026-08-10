@@ -255,11 +255,13 @@ App.prototype._removeBook = function (e) {
 
 App.prototype._toggleReadStatus = function (e) {
   const readStatusEl = e.target.closest(".checkbox");
+  console.log(readStatusEl);
+
   if (!readStatusEl) return;
 
   const bookId = this._parseBookIdFromBookEl(readStatusEl);
-  this._findBookIdxById(bookId).toggleReadStatus();
-  console.log(this._findBookIdxById(bookId));
+  this._findBookById(bookId).toggleReadStatus();
+  // console.log(this._findBookIdxById(bookId));
 
   // update local storage
   this._storeToLocalStorage("library", this.library);
@@ -271,6 +273,10 @@ App.prototype._parseBookIdFromBookEl = function (el) {
 
 App.prototype._findBookIdxById = function (id) {
   return this.library.findIndex(book => book.bookId === id);
+};
+
+App.prototype._findBookById = function (id) {
+  return this.library.find(book => book.bookId === id);
 };
 
 App.prototype._storeToLocalStorage = function (key, item) {
