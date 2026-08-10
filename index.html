@@ -117,7 +117,12 @@
     <dialog class="book-modal" closedby="any">
       <form>
         <!-- TODO: add HTML input validation -->
-        <h1>Book information</h1>
+        <header class="header">
+          <h1>Book information</h1>
+          <button class="btn--remove btn--close-modal">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </header>
         <p class="book-title-container">
           <label for="book-title">book title</label>
           <input type="text" name="book-title" required />

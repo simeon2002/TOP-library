@@ -2,6 +2,9 @@
 
 const btnsAddNewBook = document.querySelectorAll(".btn--add");
 const btnSubmitModal = document.querySelector(".btn--modal");
+const btnCloseModal = document.querySelector(".btn--close-modal");
+console.log(btnCloseModal);
+
 const btnCardDisplay = document.querySelector(".btn--card");
 const btnTableDisplay = document.querySelector(".btn--table");
 
@@ -99,6 +102,12 @@ const App = function (defaultDisplayMode = "table") {
 
     // re-render UI
     this._displayBooks(this.displayMode);
+  });
+
+  // close modal window
+  btnCloseModal.addEventListener("click", e => {
+    e.preventDefault();
+    bookModal.close();
   });
 };
 
