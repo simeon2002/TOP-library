@@ -65,6 +65,11 @@ const App = function (defaultDisplayMode = "table") {
   // render books view
   this._renderBookView(this.displayMode);
 
+  // bind event listeners
+  this._bindEventListeners();
+};
+
+App.prototype._bindEventListeners = function () {
   // Display form on add new button click
   btnsAddNewBook.forEach(btnAdd => btnAdd.addEventListener("click", this._displayForm));
 
