@@ -60,7 +60,7 @@ const App = function (defaultDisplayMode = "table") {
   this.library = this._loadLibrary();
 
   // render books view
-  this._renderBookView(this.displayMode);
+  this._renderBookView(defaultDisplayMode);
 
   // bind event listeners
   this._bindEventListeners();
@@ -290,7 +290,7 @@ const book2 = new Book("Time and Space", "John Smith", 312, true);
 const book3 = new Book("Shadows in the Dark", "Emily White", 180, false);
 const book4 = new Book("The Last Recipe", "Alan Cook", 410, false);
 
-const app = new App();
+const app = new App("card");
 // Add books
 // app._addNewBook(book1)._addNewBook(book2)._addNewBook(book3)._addNewBook(book4);
 // render books (here for now, move to constructor function later when you store them in local storage as well!)
