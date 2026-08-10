@@ -107,12 +107,21 @@ App.prototype._isLibEmpty = function (library) {
 
 App.prototype._displayBooks = function (displayFormat = "table") {
   let html;
-  if (this._isLibEmpty() === false) html = this.library.map(book => this._getBookHtml(book, displayFormat)).join("");
-  else html = "No books found yet. Add Some!";
+  if (displayFormat === "table") {
+    html = html =
+      this._isLibEmpty() === false
+        ? this.library.map(book => this._getBookHtml(book, displayFormat)).join("")
+        : "No books found yet. Add Some!";
+    tableContainer.innerHTML = "";
+    tableContainer.insertAdjacentHTML("afterbegin", html);
+  }
+  if (displayFormat === "card") {
+    const cardEls = cardsContainer.querySelectorAll(".card:not(.card--add-new)");
+    cardEls.forEach(card => card.remove());
 
-  tableContainer.innerHTML = "";
-  if (displayFormat === "table") tableContainer.insertAdjacentHTML("afterbegin", html);
-  if (displayFormat === "card") cardsContainer.insertAdjacentHTML("afterbegin", html);
+    html = this.library.map(book => this._getBookHtml(book, displayFormat)).join("");
+    cardsContainer.insertAdjacentHTML("afterbegin", html);
+  }
 };
 
 App.prototype._addNewBook = function (e) {
@@ -172,7 +181,14 @@ App.prototype._getBookHtml = function (book, displayFormat = "table") {
     return `
     <article class="card" data-book-id=${book.bookId}>
       <!-- TODO: CAN BE ADDED TOGETHER WITH IMAGE UPLOAD SUPPORT <img src="" alt=""> -->
-      <h2 class="card__book-title">${book.title}</h2>
+      <header class="card__header">
+        <h2 class="card__book-title">
+        ${book.title}
+        </h2>
+       <button class="btn--remove">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </header>
       <ul class="card__list card__book-details">
         <li class="card__list-item card__author"><span>Author</span> <span Cook>${book.author}</span></li>
         <li class="card__list-item card__pages"><span>Pages</span><span>${book.pages}</span></li>
