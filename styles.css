@@ -148,9 +148,9 @@ tbody td {
   padding: var(--space-200) var(--space-200) 0;
 }
 
-tbody tr:not(:last-child) td {
-  /* border-bottom: 1px solid var(--clr-green-light); */
-}
+/* tbody tr:not(:last-child) td { */
+/* border-bottom: 1px solid var(--clr-green-light); */
+/* } */
 
 .book__read-status,
 .book__remove {

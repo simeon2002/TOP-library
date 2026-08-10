@@ -270,7 +270,7 @@ App.prototype._parseBookIdFromBookEl = function (el) {
 };
 
 App.prototype._findBookIdxById = function (id) {
-  return this.library.find(book => book.bookId === id);
+  return this.library.findIndex(book => book.bookId === id);
 };
 
 App.prototype._storeToLocalStorage = function (key, item) {
