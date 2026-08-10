@@ -62,11 +62,8 @@ const App = function (defaultDisplayMode = "table") {
   // set initial display mode
   this.displayMode = defaultDisplayMode;
 
-  // initialize display class settings
-  this._switchDisplayClasses(this.displayMode);
-
-  // Display books on page load
-  this._displayBooks(this.displayMode);
+  // render books view
+  this._renderBookView(this.displayMode);
 
   // Display form on add new button click
   btnsAddNewBook.forEach(btnAdd => btnAdd.addEventListener("click", this._displayForm));
@@ -81,34 +78,26 @@ const App = function (defaultDisplayMode = "table") {
   displayContainer.addEventListener("click", this._toggleReadStatus.bind(this));
 
   // swtich to card display mode
-  btnCardDisplay.addEventListener("click", e => {
-    // change display format
-    this.displayMode = "card";
-
-    // Adjust classes
-    this._switchDisplayClasses(this.displayMode);
-
-    // re-render UI
-    this._displayBooks(this.displayMode);
-  });
+  btnCardDisplay.addEventListener("click", e => this._renderBookView("card"));
 
   // swtich to table display mode
-  btnTableDisplay.addEventListener("click", e => {
-    // change display format
-    this.displayMode = "table";
-
-    // Adjust classes
-    this._switchDisplayClasses(this.displayMode);
-
-    // re-render UI
-    this._displayBooks(this.displayMode);
-  });
+  btnTableDisplay.addEventListener("click", e => this._renderBookView("table"));
 
   // close modal window
   btnCloseModal.addEventListener("click", e => {
     e.preventDefault();
     bookModal.close();
   });
+};
+
+App.prototype._renderBookView = function (displayFormat) {
+  this.displayMode = displayFormat;
+
+  // initialize display class settings
+  this._switchDisplayClasses(this.displayMode);
+
+  // Display books on page load
+  this._displayBooks(this.displayMode);
 };
 
 App.prototype._switchDisplayClasses = function (displayFormat) {
